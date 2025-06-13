@@ -1,0 +1,42 @@
+ create a foldder set the environment 
+  -> python -m venv myvenv
+Then activate is 
+  -> myvenv\Scripts\activate
+
+create a requirements.txt in myvenv
+ and add add the Django version Then in myvenv
+ -> pip install -r requirements.txt
+
+ go back to the main file directory
+ -> django-admin.exe startproject mysite .
+ will cretae manage.py script that helps with management of the site
+
+ changes in mysite
+ "https://tutorial.djangogirls.org/en/django_start_project/"
+ go here 
+
+ after changing in mysite/setting.py 
+  -> python manage.py migrate
+
+  for running use 
+  -> python manage.py runserver
+
+
+//models
+if want to create model, create object first 
+model special kind of object, that is saved in the database
+
+to create modal for blog
+python manage.py startapp blog
+
+after that go the setting page again and add newly created blog in INSTALLED_APPS
+
+after making changes in blog/models.py
+ -> python manage.py makemigrations blog
+
+ after making changes in admin.py
+ create an admin
+ -> python manage.py createsuperuser
+
+
+ Deploy using PythonAnywhere for small applications 
