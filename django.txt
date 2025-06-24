@@ -40,3 +40,38 @@ after making changes in blog/models.py
 
 
  Deploy using PythonAnywhere for small applications 
+ pythonPassword 
+ username: sonyaG
+
+Everything in pythonanywhere bash 
+ helper tool that will involves pulling down code from GitHub, then configuring PythonAnywhere to recognise it and start serving it as
+ a web applications. ( it should be in the paythonAnywhere not git bash )
+ for linux or others use: -> pip3.10 install --user pythonanywhere
+ for window use: -> py -m pip install --user pythonanywhere
+ then verify with
+ -> py -m pip show pythonanywhere
+
+ if clone didn't happen do manually
+ -> git clone https://github......
+ then 
+ -> cd 
+
+for creating superUser
+-> python manage.py createsuperuser
+-> ls ( for seeing list of files)
+
+my web hosted on PythonAnywhere
+https://sonyag.pythonanywhere.com/
+
+now im live it has been deployed go to "web" inorder to get link 
+
+ (This tells Python to run pip as a module, which is a reliable and version-safe way to install packages on Windows.)
+
+
+superUser
+    password:AnywherePassword
+    username: sonyag
+
+ API token
+    username = 'sonyaG'
+token = 'bd85ee79aad3ebdab282428cd178e105ca4b404e'

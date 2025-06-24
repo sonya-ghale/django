@@ -1,0 +1,11 @@
+# here importing django function path and all of our views from the blog applications
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.post_list, name='post_list'),
+    # the last name='posy_list' is the name of the url that will be used to identify the view 
+    #path('', views.post_list, name='post_list'),
+]
+
