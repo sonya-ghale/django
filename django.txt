@@ -75,3 +75,15 @@ superUser
  API token
     username = 'sonyaG'
 token = 'bd85ee79aad3ebdab282428cd178e105ca4b404e'
+
+ORM and queryset
+
+go to django shell in terminal(i went)
+go here https://tutorial.djangogirls.org/en/django_orm/
+-> python manage.py shell
+ (now we are in django interactive console can use all python command)
+ pthon command
+   -> Post.objects.all()
+   -> form blog.models import Post
+   create new oject
+   -> Post.objects.create(author=me, title='Sample title', text='Test')
