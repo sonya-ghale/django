@@ -22,6 +22,12 @@
         <a href="{% url 'post_new' %}" class="top-menu">
           {% include './icons/file-earmark-plus.svg' %}
         </a>
+        {% endif %} {% if user.is_authenticated %}
+        <p>
+          Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a>
+        </p>
+        {% else %}
+        <a href="{% url 'login' %}">Login</a>
         {% endif %}
 
         <h1><a href="/">Blog Blog</a></h1>
