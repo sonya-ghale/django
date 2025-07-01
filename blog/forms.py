@@ -9,3 +9,5 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields =('title', 'text')
+
+        # here i pass what are the field required for the form

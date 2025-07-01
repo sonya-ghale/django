@@ -34,6 +34,7 @@ def post_edit(request, pk):
     
     return render(request, 'blog/post_edit.html', {'form': form})
 
+# here create a form variable and pass it to the template context
 @login_required
 def post_new(request): 
     if request.method == "POST":
@@ -46,5 +47,6 @@ def post_new(request):
             return redirect('post_detail', pk=post.pk)
     else: 
         form = PostForm()
+# Postform instance (empty or filled with post data)
     
     return render(request, 'blog/post_edit.html', {'form': form})

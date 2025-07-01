@@ -29,8 +29,6 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.pythonanywhere.com']
 
 LOGIN_REDIRECT_URL = '/post/new/'  # or any valid URL in your app
 
-
-
 # Application definition
 
 INSTALLED_APPS = [

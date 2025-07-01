@@ -2,6 +2,7 @@
 <h2>New post</h2>
 <form method="POST" class="post-form">
   {% csrf_token %} {{ form.as_p }}
+  {% comment %} use this form.as_p to render the input field for the specified model fields {% endcomment %}
   <button type="submit" class="save btn btn-secondary">Save</button>
 </form>
 {% endblock %}
