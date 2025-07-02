@@ -89,3 +89,6 @@ go here https://tutorial.djangogirls.org/en/django_orm/
    -> Post.objects.create(author=me, title='Sample title', text='Test')
 
    ( if post again migrate or clone git hub if any error occured) first the changes should be inside the git hub 
+
+
+    Live Reload Tool for django
