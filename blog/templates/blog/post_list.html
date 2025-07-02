@@ -12,6 +12,9 @@
 
 <article>
   <time>published: {{ post.published_date }} </time>
+  {% if post.image %}
+  <img src="{{ post.image.url }}" alt="Post image" class="img-fluid" style="max-width: 300px;" />
+  {% endif %}
   {% comment %} curly bracket syntax is for showing the output and here the below post.title is the variable {% endcomment %}
   {% comment %} Django finds the URL pattern named 'post_detail' that expects a pk argument. enter actual pk in the place of the pk {% endcomment %}
   <h2> <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</h2>

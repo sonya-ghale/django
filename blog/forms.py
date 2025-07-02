@@ -8,6 +8,6 @@ class PostForm(forms.ModelForm):
 # tell django which model should be created from this form
     class Meta:
         model = Post
-        fields =('title', 'text')
+        fields =('title', 'text', 'image')
 
         # here i pass what are the field required for the form

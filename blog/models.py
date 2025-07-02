@@ -5,8 +5,9 @@ from django.utils.translation import gettext_lazy as _  # Optional, for translat
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(_("Title"), max_length=200)
+    title = models.CharField(max_length=200)
     text = models.TextField()
+    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
