@@ -48,11 +48,11 @@
     </header>
 
     <main class="max-w-4xl mx-auto px-4 py-6">
-      <div class="bg-white shadow-md rounded-xl p-6">
+      <div class=" rounded-xl p-6">
         {% block content %}
-        {% if post.image %}
+        {% comment %} {% if post.image %}
   <img src="{{ post.image.url }}" alt="Post image" class="img-fluid" style="max-width: 300px;" />
-{% endif %}
+{% endif %} {% endcomment %}
 
         <!-- Content from other templates will appear here -->
         {% endblock %}
