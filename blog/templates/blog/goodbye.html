@@ -1,0 +1,12 @@
+{% extends "blog/base.html" %} {% block content %}
+<div class="text-center mt-5">
+  <h2>👋 Goodbye, see you again!</h2>
+  <p>You will be redirected to login shortly...</p>
+</div>
+
+<script>
+  setTimeout(() => {
+    window.location.href = "{% url 'login' %}";
+  }, 3000); // 3 seconds delay
+</script>
+{% endblock %}

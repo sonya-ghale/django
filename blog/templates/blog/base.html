@@ -32,7 +32,13 @@
           </a>
           <p class="text-sm">
             Welcome, <span class="font-medium">{{ user.username }}</span>!
-            <a href="{% url "logout" %}" class="text-red-600 hover:underline">Logout </a>
+
+            <form method="POST" action="{% url "logout" %}" style="display: inline;" >
+              {% csrf_token %}
+              <button class="btn btn-link" style="border: none; background: none;">
+                Logout
+              </button>
+            </form>
           </p>
           {% else %}
           <a href="{% url "login" %}" class="text-sm text-blue-600 hover:underline">Login </a>

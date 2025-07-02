@@ -3,6 +3,7 @@
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
+from .views import custom_logout
 
 urlpatterns = [
   path("__reload__/", include("django_browser_reload.urls")),
@@ -19,7 +20,8 @@ urlpatterns = [
 
       path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
 
-      path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
+      # path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
+      path('accounts/logout/', custom_logout, name='logout'),
 
 ]
 
