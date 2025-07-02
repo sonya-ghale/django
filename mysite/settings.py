@@ -34,6 +34,7 @@ LOGIN_REDIRECT_URL = '/post/new/'  # or any valid URL in your app
 INSTALLED_APPS = [
     'django.contrib.admin',
 'django.contrib.auth',
+ "django_browser_reload",
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

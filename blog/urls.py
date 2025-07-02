@@ -1,10 +1,12 @@
 # here importing django function path and all of our views from the blog applications
 
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+  path("__reload__/", include("django_browser_reload.urls")),
+
     path('', views.post_list, name='post_list'),
     # create path after creating link in the posr_list title
     path('post/<int:pk>/', views.post_detail, name='post_detail'),

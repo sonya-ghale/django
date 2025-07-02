@@ -7,18 +7,18 @@
     {% comment %} don't have to add the tailwind cdn in every {% endcomment %}
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext"
-    />
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+
   </head>
+  {% if debug %}
+  <script src="http://localhost:8000/__reload__/reload.js"></script>
+{% endif %}
+
   <body class="bg-gray-50 text-gray-800 font-sans">
     <header class="bg-white shadow">
       <div
         class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center"
       >
-        <h1 class="text-3xl font-bold text-blue-600">
+        <h1 class="text-3xl font-bold text-red-600">
           <a href="/">Blog</a>
         </h1>
 

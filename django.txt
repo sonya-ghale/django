@@ -91,4 +91,13 @@ go here https://tutorial.djangogirls.org/en/django_orm/
    ( if post again migrate or clone git hub if any error occured) first the changes should be inside the git hub 
 
 
-    Live Reload Tool for django
+    Live Reload Tool for django installation process
+    1 install -> pip install django-browser-reload
+    2 then go to setting add "django_browser_reload" in installed apps
+    3 go to actual main project url pattern and add the paythonAnywhere
+     -> path("__reload__/", include("django_browser_reload.urls")),
+    4 go to middleware in setting and add "django_browser_reload.middleware.BrowserReloadMiddleware",
+    5 then add the script to the base.html before body 
+    {% if debug %}
+    <script src=""></script> {% endif %}
+     
