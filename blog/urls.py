@@ -5,12 +5,15 @@ from . import views
 from django.contrib.auth import views as auth_views
 from .views import custom_logout
 from .views import chrome_devtools_json
+from .views import register
 
 
 urlpatterns = [
   path("__reload__/", include("django_browser_reload.urls")),
 
   path('.well-known/appspecific/com.chrome.devtools.json', chrome_devtools_json),
+
+  path('accounts/register/', register, name='register'),
 
     path('', views.post_list, name='post_list'),
     # create path after creating link in the posr_list title
