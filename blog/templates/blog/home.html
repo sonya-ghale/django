@@ -30,7 +30,8 @@
     </a>
   </h3>
   <p class="text-gray-500 text-sm">
-    By {{ post.author }} on {{ post.published_at|date:"F d, Y" }}
+
+      By {{ post.author }} on {{ post.published_date|date:"F d, Y" }}
   </p>
   <p>{{ post.body|truncatewords:30 }}</p>
 </div>
