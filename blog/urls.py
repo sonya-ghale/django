@@ -3,9 +3,7 @@
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import custom_logout
-from .views import chrome_devtools_json
-from .views import register
+from .views import custom_logout,chrome_devtools_json,register,custom_login_view
 
 
 urlpatterns = [
@@ -14,6 +12,8 @@ urlpatterns = [
   path('.well-known/appspecific/com.chrome.devtools.json', chrome_devtools_json),
 
   path('accounts/register/', register, name='register'),
+
+  path('accounts/login/', custom_login_view, name='login'),
 
     path('', views.post_list, name='post_list'),
     # create path after creating link in the posr_list title
@@ -25,7 +25,7 @@ urlpatterns = [
 
     path('post/<int:pk>/edit/', views.post_edit, name="post_edit"),
 
-      path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
+      # path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
 
       # path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
       path('accounts/logout/', custom_logout, name='logout'),

@@ -10,6 +10,9 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.http import JsonResponse
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from .forms import CustomLoginForm 
 
 # from django.views.generic.edit import DeleteView 
 # from django.urls import reverse_lazy
@@ -33,6 +36,27 @@ def register(request):
         form = UserCreationForm()
     
     return render(request, 'registration/register.html', {'form': form})
+
+
+def custom_login_view(request):
+    if request.method == 'POST':
+        form = CustomLoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                messages.success(request, f"Welcome back, {user.username}")
+                return redirect('home')
+            else:
+                messages.error(request, 'Invalid username or password')
+    else:
+        form = CustomLoginForm()
+
+    return render(request, 'registration/login.html', {'form': form})
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')

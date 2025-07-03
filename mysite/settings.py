@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.pythonanywhere.com']
 
+LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = 'post_list'  # or any valid URL in your app
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 
