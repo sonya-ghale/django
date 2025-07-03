@@ -17,10 +17,9 @@ from .forms import CustomLoginForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
-
-# from django.views.generic.edit import DeleteView 
-# from django.urls import reverse_lazy
-# from .models import Post
+from django.http import HttpResponseForbidden
+from .models import Post
+from .forms import PostForm
 
 def chrome_devtools_json(request):
     return JsonResponse({})
@@ -70,16 +69,40 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
 
+
+# @login_required
+# def post_edit(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+
+#     if post.author != request.user:
+#         return HttpResponseForbidden("You are not allowed to edit this post")
+    
+#     if request.method == "POST":
+#         form = PostForm(request.POST, request.FILES, instance=post)
+
+#         if form.is_valid():
+#             post = form.save(commit=False)
+#             post.author = request.user
+#             post.published_date = timezone.now()
+#             post.save()
+#             return redirect('post_detail', pk=post.pk)
+#         else:
+#             form = PostForm(instance=post)
+
+#         return render(request, 'blog/post_edit.html', {'form': form})
+
 @login_required
 def post_edit(request, pk): 
     post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        # form = PostForm(request.POST, instance=post, request.FILES)
-        form = PostForm(request.POST, request.FILES, instance=post)  
 
+    if post.author != request.user:
+        return HttpResponseForbidden("You are not allowed to edit this post.")
+
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user
+            post.author = request.user  # usually redundant on edit, but OK
             post.published_date = timezone.now()
             post.save()
             return redirect('post_detail', pk=post.pk)
@@ -87,6 +110,7 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     
     return render(request, 'blog/post_edit.html', {'form': form})
+
 
 # here create a form variable and pass it to the template context
 @login_required
@@ -112,13 +136,26 @@ def custom_logout(request):
         return render(request, 'blog/goodbye.html')
     return redirect('post_list') 
 
+# less safer 
+# @login_required
+# def post_delete(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+
+#     if post.author != request.user:
+#         return HttpResponseForbidden("You are not allowed to delete this post.")
+    
+#     post.delete()
+#     return redirect('post_list')
+
 @login_required
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    if post.author != request.user:
-        return redirect('post_detail', pk=pk)
 
-    if request.method ==  "POST":
+    if post.author != request.user:
+        return HttpResponseForbidden("You are not allowed to delete this post.")
+    
+    if request.method == "POST":
         post.delete()
         return redirect('post_list')
+    
     return render(request, 'blog/post_confirm_delete.html', {'post': post})
