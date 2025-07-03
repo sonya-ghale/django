@@ -101,3 +101,10 @@ go here https://tutorial.djangogirls.org/en/django_orm/
     {% if debug %}
     <script src=""></script> {% endif %}
      
+
+after creating models don't forget to migrate
+ python manage.py makemigrations
+ python manage.py migrate
+
+also after creating it if your data is getting post but not shown in django admin 
+add the created model in the admin panel

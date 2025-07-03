@@ -1,94 +1,4 @@
-{% extends 'blog/base.html' %}
-
-{% block content %}
-<article class="post">
-  <aside class="actions">
-    {% if user.is_authenticated %}
-      <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
-        {% include './icons/pencil-fill.svg' %}
-      </a>
-    {% endif %}
-  </aside>
-
-  <form method="post" action="{% url 'post_delete' pk=post.pk %}" style="display: inline">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Delete</button>
-  </form>
-
-  {% if post.image %}
-    <img src="{{ post.image.url }}" alt="Post image" class="img-fluid" style="max-width: 300px" />
-  {% endif %}
-
-  {% if post.published_date %}
-    <time class="date"> {{ post.published_date }} </time>
-  {% endif %}
-  
-  <h2>{{ post.title }}</h2>
-  <p>{{ post.text|linebreaksbr }}</p>
-</article>
-
-<!-- 👇 COMMENT SECTION START -->
-<hr>
-<h3>Comments</h3>
-
-<button id="show-comment-form">💬 Leave a Comment</button>
-
-<div id="comment-form" style="display:none;">
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Post</button>
-  </form>
-</div>
-
-<hr>
-
-{% for comment in comments %}
-  <div style="margin-bottom: 10px;">
-    <strong>{{ comment.author.username }}</strong> 🕒 {{ comment.created_at|timesince }} ago
-    <p>{{ comment.text|linebreaksbr }}</p>
-
-    <a href="#" class="reply-btn" data-id="{{ comment.id }}">Reply</a>
-
-    <!-- Reply Form (hidden) -->
-    <form method="post" class="reply-form" data-id="{{ comment.id }}" style="display:none; margin-left: 20px;">
-      {% csrf_token %}
-      <textarea name="text" rows="2" placeholder="Reply..."></textarea>
-      <input type="hidden" name="parent_id" value="{{ comment.id }}">
-      <button type="submit">Reply</button>
-    </form>
-
-    <!-- Nested Replies -->
-    {% for reply in comment.replies.all %}
-      <div style="margin-left: 30px; border-left: 1px solid #ddd; padding-left: 10px;">
-        <strong>{{ reply.author.username }}</strong> 🕒 {{ reply.created_at|timesince }} ago
-        <p>{{ reply.text|linebreaksbr }}</p>
-      </div>
-    {% endfor %}
-  </div>
-{% endfor %}
-<!-- 👆 COMMENT SECTION END -->
-
-<!-- Add this script for toggle -->
-<script>
-document.getElementById("show-comment-form").addEventListener("click", () => {
-  const form = document.getElementById("comment-form");
-  form.style.display = form.style.display === "none" ? "block" : "none";
-});
-
-document.querySelectorAll(".reply-btn").forEach(button => {
-  button.addEventListener("click", (e) => {
-    e.preventDefault();
-    const id = button.dataset.id;
-    const form = document.querySelector(`.reply-form[data-id="${id}"]`);
-    form.style.display = form.style.display === "none" ? "block" : "none";
-  });
-});
-</script>
-{% endblock %}
-
-
-{% comment %} {% extends 'blog/base.html' %} {% block content %}
+{% extends 'blog/base.html' %} {% block content %}
 <article class="post">
   <aside class="actions">
     {% if user.is_authenticated %}
@@ -97,6 +7,7 @@ document.querySelectorAll(".reply-btn").forEach(button => {
     </a>
     {% endif %}
   </aside>
+
   <form
     method="post"
     action="{% url 'post_delete' pk=post.pk %}"
@@ -116,9 +27,105 @@ document.querySelectorAll(".reply-btn").forEach(button => {
   {% endif %} {% if post.published_date %}
   <time class="date"> {{ post.published_date }} </time>
   {% endif %}
+
   <h2>{{ post.title }}</h2>
   <p>{{ post.text|linebreaksbr }}</p>
 </article>
+
+<!-- lIKE SECTION START -->
+<form action="{% url 'like_post' pk=post.pk %}" method="POST">
+  {% csrf_token %} {% if user in post.likes.all %} {% comment %} go to previous
+  state of nothing like not liking state if clicked again {% endcomment %}
+  <button type="submit">❤️ ({{ post.total_likes}})</button>
+  {% else %} {% comment %} for liking if it not liked at first why would it be
+  red {% endcomment %}
+  <button type="submit">🤍({{ post.total_likes }})</button>
+  {% endif %}
+</form>
+
+<!--  COMMENT SECTION START -->
+<hr />
+<h3>Comments</h3>
+
+<button id="show-comment-form">💬 Leave a Comment</button>
+
+<div id="comment-form" style="display: none">
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Post</button>
+  </form>
+</div>
+
+<hr />
+
+{% for comment in comments %}
+<div style="margin-bottom: 10px">
+  <strong>{{ comment.author.username }}</strong>
+  🕒 {{ comment.created_at|timesince }} ago
+  <p>{{ comment.text|linebreaksbr }}</p>
+
+  <a href="#" class="reply-btn" data-id="{{ comment.id }}">Reply</a>
+
+  <!-- Reply Form (hidden) -->
+  <form
+    method="post"
+    class="reply-form"
+    data-id="{{ comment.id }}"
+    style="display: none; margin-left: 20px"
+  >
+    {% csrf_token %}
+    <textarea name="text" rows="2" placeholder="Reply..."></textarea>
+    <input type="hidden" name="parent_id" value="{{ comment.id }}" />
+    <button type="submit">Reply</button>
+  </form>
+
+  <!-- Nested Replies -->
+  {% for reply in comment.replies.all %}
+  <div
+    style="margin-left: 30px; border-left: 1px solid #ddd; padding-left: 10px"
+  >
+    <strong>{{ reply.author.username }}</strong>
+
+    {% if reply.created_at %} 🕒 {{ reply.created_at|timesince }} ago {% else %}
+    just now {% endif %}
+
+    <p>{{ reply.text|linebreaksbr }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endfor %}
+<!-- 👆 COMMENT SECTION END -->
+
+<!-- Add this script for toggle -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("Script running...");
+
+    const commentBtn = document.getElementById("show-comment-form");
+    const commentForm = document.getElementById("comment-form");
+
+    if (commentBtn && commentForm) {
+      commentBtn.addEventListener("click", function () {
+        commentForm.style.display =
+          commentForm.style.display === "none" ? "block" : "none";
+      });
+    }
+
+    document.querySelectorAll(".reply-btn").forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        const id = btn.dataset.id;
+        const replyForm = document.querySelector(`.reply-form[data-id="${id}"]`);
+        if (replyForm) {
+          replyForm.style.display =
+            replyForm.style.display === "none" ? "block" : "none";
+        }
+      });
+    });
+  });
+</script>
+
+
 {% endblock %} {% comment %} means it will inherit from another template, it
 will use structure of another html page {% endcomment %} {% comment %} shows the
 detail {% endcomment %}

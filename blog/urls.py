@@ -3,7 +3,7 @@
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import custom_logout,chrome_devtools_json,register,custom_login_view
+from .views import custom_logout,chrome_devtools_json,register,custom_login_view,like_post
 
 
 urlpatterns = [
@@ -24,13 +24,14 @@ urlpatterns = [
     path('post/new/', views.post_new, name='post_new'),
 
     path('post/<int:pk>/edit/', views.post_edit, name="post_edit"),
-
       # path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
 
       # path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
       path('accounts/logout/', custom_logout, name='logout'),
 
       path('post/<int:pk>/delete/', views.post_delete, name='post_delete'),
+
+      path('post/<int:pk>/like', like_post, name='like_post'),
 
 ]
 

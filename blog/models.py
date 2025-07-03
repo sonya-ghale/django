@@ -12,6 +12,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post_images/', blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
+    likes = models.ManyToManyField(User, related_name='liked_posts', blank=True)
 
     def publish(self):
         self.published_date = timezone.now()
@@ -19,6 +20,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def total_likes(self):
+        return self.likes.count()
 
 
 class Comment(models.Model):

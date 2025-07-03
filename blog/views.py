@@ -68,17 +68,12 @@ def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
 
-# def post_detail(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#     return render(request, 'blog/post_detail.html', {'post': post})
-
-@login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    comments = post.comments.filter(parent__isnull=True)  # only top-level comments
-    form = CommentForm()
+    comments = post.comments.filter(parent__isnull=True)
+    form = CommentForm()  # ✅ Initialize form here
 
-    if request.method == "POST":
+    if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -92,7 +87,7 @@ def post_detail(request, pk):
 
     return render(request, 'blog/post_detail.html', {
         'post': post,
-        'form': form,
+        'form': form,  
         'comments': comments,
     })
 
@@ -186,3 +181,12 @@ def post_delete(request, pk):
         return redirect('post_list')
     
     return render(request, 'blog/post_confirm_delete.html', {'post': post})
+
+@login_required
+def like_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return redirect('post_detail', pk=pk)
