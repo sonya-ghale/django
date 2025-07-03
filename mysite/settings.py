@@ -28,9 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.pythonanywhere.com']
 
-LOGIN_URL = '/accounts/login/'
+# LOGIN_URL = '/accounts/custom_login_view/'
 LOGIN_REDIRECT_URL = 'post_list'  # or any valid URL in your app
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = '/accounts/custom_login_view/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

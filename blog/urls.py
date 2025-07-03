@@ -13,10 +13,10 @@ urlpatterns = [
 
   path('accounts/register/', register, name='register'),
 
-  path('accounts/login/', custom_login_view, name='login'),
+  path('accounts/custom_login_view/', custom_login_view, name='login'),
 
     path('', views.post_list, name='post_list'),
-    # create path after creating link in the posr_list title
+  # create path after creating link in the posr_list title
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
     # the last name='posy_list' is the name of the url that will be used to identify the view 
     #path('', views.post_list, name='post_list'),

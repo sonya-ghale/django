@@ -14,6 +14,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import CustomLoginForm 
 
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+
 # from django.views.generic.edit import DeleteView 
 # from django.urls import reverse_lazy
 # from .models import Post
@@ -56,7 +60,7 @@ def custom_login_view(request):
     else:
         form = CustomLoginForm()
 
-    return render(request, 'registration/login.html', {'form': form})
+    return render(request, 'registration/custom_login_view.html', {'form': form})
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
