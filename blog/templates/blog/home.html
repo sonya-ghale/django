@@ -30,10 +30,17 @@
     </a>
   </h3>
   <p class="text-gray-500 text-sm">
-
-      By {{ post.author }} on {{ post.published_date|date:"F d, Y" }}
+    By {{ post.author }} on {{ post.published_date|date:"F d, Y" }}
   </p>
   <p>{{ post.body|truncatewords:30 }}</p>
+  <form
+    method="post"
+    action="{% url 'post_delete' pk=post.pk %}"
+    style="display: inline"
+  >
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
 </div>
 {% empty %}
 <p>No posts yet. Stay tuned!</p>

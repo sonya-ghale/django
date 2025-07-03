@@ -11,6 +11,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.http import JsonResponse
 
+# from django.views.generic.edit import DeleteView 
+# from django.urls import reverse_lazy
+# from .models import Post
+
 def chrome_devtools_json(request):
     return JsonResponse({})
 
@@ -79,3 +83,14 @@ def custom_logout(request):
         logout(request)
         return render(request, 'blog/goodbye.html')
     return redirect('post_list') 
+
+@login_required
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if post.author != request.user:
+        return redirect('post_detail', pk=pk)
+
+    if request.method ==  "POST":
+        post.delete()
+        return redirect('post_list')
+    return render(request, 'blog/post_confirm_delete.html', {'post': post})

@@ -7,6 +7,14 @@
     </a>
     {% endif %}
   </aside>
+  <form
+    method="post"
+    action="{% url 'post_delete' pk=post.pk %}"
+    style="display: inline"
+  >
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
 
   {% if post.image %}
   <img

@@ -30,5 +30,7 @@ urlpatterns = [
       # path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
       path('accounts/logout/', custom_logout, name='logout'),
 
+      path('post/<int:pk>/delete/', views.post_delete, name='post_delete'),
+
 ]
 
