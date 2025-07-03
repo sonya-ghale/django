@@ -21,6 +21,9 @@ from django.http import HttpResponseForbidden
 from .models import Post
 from .forms import PostForm
 
+from .forms import CommentForm
+from .models import Comment
+
 def chrome_devtools_json(request):
     return JsonResponse({})
 
@@ -65,9 +68,33 @@ def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
 
+# def post_detail(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+#     return render(request, 'blog/post_detail.html', {'post': post})
+
+@login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    comments = post.comments.filter(parent__isnull=True)  # only top-level comments
+    form = CommentForm()
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            parent_id = request.POST.get('parent_id')
+            if parent_id:
+                comment.parent = Comment.objects.get(id=parent_id)
+            comment.save()
+            return redirect('post_detail', pk=pk)
+
+    return render(request, 'blog/post_detail.html', {
+        'post': post,
+        'form': form,
+        'comments': comments,
+    })
 
 
 # @login_required
