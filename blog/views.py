@@ -71,7 +71,7 @@ def post_list(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     comments = post.comments.filter(parent__isnull=True)
-    form = CommentForm()  # ✅ Initialize form here
+    form = CommentForm()  
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
