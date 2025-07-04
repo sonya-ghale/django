@@ -1,4 +1,5 @@
-{% extends "blog/base.html" %} {% block content %}
+{% extends "blog/base.html" %} {% block content %} {% load tag_filters %}
+
 <div class="mb-4">
   {% if user.is_authenticated %}
   <p class="text-green-700 font-semibold">Welcome, {{ user.username }}!</p>
@@ -32,6 +33,15 @@
   <p class="text-gray-500 text-sm">
     By {{ post.author }} on {{ post.published_date|date:"F d, Y" }}
   </p>
+
+  <div class="flex flex-wrap gap-2 mt-2">
+    {% for tag in post.tags|split_tags %}
+    <div class="rounded-md px-3 py-1 bg-gray-200 hover:bg-gray-300 text-sm">
+      #{{ tag }}
+    </div>
+    {% endfor %}
+  </div>
+
   <p>{{ post.body|truncatewords:30 }}</p>
 </div>
 {% empty %}

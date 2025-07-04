@@ -14,6 +14,9 @@ class Post(models.Model):
     published_date = models.DateTimeField(blank=True, null=True)
     likes = models.ManyToManyField(User, related_name='liked_posts', blank=True)
 
+# using charfield to accept comma separated tags
+    tags = models.CharField(max_length=255, blank=True)
+
     def publish(self):
         self.published_date = timezone.now()
         self.save()

@@ -105,6 +105,8 @@ go here https://tutorial.djangogirls.org/en/django_orm/
 after creating models don't forget to migrate
  python manage.py makemigrations
  python manage.py migrate
+ if error occur go to 
+ https://medium.com/@cssjhnnamae/how-to-deploy-a-python-app-on-pythonanywhere-cf399f4bbc01
 
 also after creating it if your data is getting post but not shown in django admin 
 add the created model in the admin panel
